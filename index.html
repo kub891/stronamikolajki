@@ -68,11 +68,21 @@
 
 
     <!-- PUZZLE 3 -->
-    <article class="card hidden" id="puzzle3">
-      <h2>3. Rymowanka</h2>
-      <p class="hint">Dokończ refren i otwórz film.</p>
-      <button class="btn" onclick="finish()">Otwórz film</button>
-    </article>
+<article class="card hidden" id="puzzle3">
+  <h2>3. Pytanie</h2>
+  <p class="hint">Najlepsza marka samochodu?</p>
+  <div class="choices">
+    <input type="radio" id="c3a" name="car">
+    <label class="choice" for="c3a" onclick="finishCar('Audi')">Audi</label>
+
+    <input type="radio" id="c3b" name="car">
+    <label class="choice" for="c3b" onclick="finishCar('BMW')">BMW</label>
+
+    <input type="radio" id="c3c" name="car">
+    <label class="choice" for="c3c" onclick="finishCar('Mercedes')">Mercedes</label>
+  </div>
+  <p id="carMsg" class="small" style="color:#ff6a6a;margin-top:8px;"></p>
+</article>
   </section>
 
   <footer>
@@ -112,6 +122,16 @@ function nextPuzzleText() {
   document.getElementById('puzzle1').classList.add('hidden');
   document.getElementById('puzzle2').classList.remove('hidden');
 }
+function finishCar(choice) {
+  if(choice === 'Audi') {
+    // Poprawna odpowiedź
+    window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+  } else {
+    // Niepoprawna odpowiedź
+    document.getElementById('carMsg').textContent = 'Niepoprawna odpowiedź — spróbuj ponownie.';
+  }
+}
+
 </script>
 </body>
 </html>
