@@ -64,10 +64,9 @@
     <article class="card hidden" id="puzzle2">
       <h2>2. Rozpoznaj piosenkę</h2>
       <p class="hint">Wysłuchaj krótkiej zajawki i wpisz tytuł piosenki.</p>
-      <audio controls style="width:100%;margin:10px 0 14px 0;">
-        <source src="audio/zajaweczka.mp3" type="audio/mpeg">
-        Twój przeglądarka nie obsługuje odtwarzania audio.
-      </audio>
+      <div style="margin:10px 0;">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://www.youtube.com/embed/k7e_AUmZmDg?controls=1"></iframe>
+      </div>
       <p class="small">Słowo klucz: <strong>zajaweczka</strong></p>
       <input type="text" id="songTitle" placeholder="Wpisz tytuł piosenki" style="width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;">
       <button class="btn" onclick="checkSongTitle()" style="margin-top:10px;">Sprawdź</button>
