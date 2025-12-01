@@ -12,138 +12,104 @@
     header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
     h1{font-size:20px;margin:0}
     p.lead{margin:0;color:var(--muted)}
-
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
     @media (max-width:880px){.grid{grid-template-columns:1fr}}
-
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:20px;border-radius:12px;box-shadow: 0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
     .card h2{margin:0 0 8px 0;font-size:16px}
     .hint{color:var(--muted);font-size:13px;margin-bottom:12px}
-
-    /* Choice list */
     .choices{display:flex;flex-direction:column;gap:8px}
     .choice{display:block;background:var(--glass);padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
     .choice input{display:none}
     .choice span{display:inline-block}
     .choice:hover{transform:translateY(-2px)}
-
-    /* Reveal area - hidden by default */
     .reveal{margin-top:12px;padding:12px;border-radius:8px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));border:1px solid rgba(255,255,255,0.02);display:none}
-
-    /* When the right radio is checked, show the reveal - achieved using adjacent sibling selector */
     input[type="radio"]:checked + label + .reveal{display:block}
-
-    /* Decoration for buttons */
     .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#ff8f43);color:#071021;text-decoration:none;font-weight:700}
-
     footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
-
-    /* Small rebus styling */
     .rebus{font-weight:700;font-size:22px;letter-spacing:1px;margin:12px 0}
     .small{font-size:13px;color:var(--muted)}
-
-    /* For puzzle 2: secret letter grid using checkboxes */
-    .grid-letters{display:flex;flex-wrap:wrap;gap:8px}
-    .gcell{width:34px;height:34px;border-radius:6px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;font-weight:700}
-
-    /* Use checkbox checked trick to reveal link for puzzle 2 and 3 */
-    input[type="checkbox"]{display:none}
-    input[type="checkbox"]:checked + label + .reveal{display:block}
-
-    /* small accessibility */
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  .step2, .step3{display:none} input#p1a:checked ~ section .step2{display:block} input#p2ok:checked ~ section .step3{display:block}
-</style>
+    .hidden{display:none}
+  </style>
 </head>
 <body>
-  <main class="wrap">
-    <header>
-      <div>
-        <h1>Zagadki — odkryj link</h1>
-        <p class="lead">Każda zagadka po poprawnym rozwiązaniu odsłania przycisk prowadzący do tego samego filmu. Powodzenia!</p>
+<main class="wrap">
+  <header>
+    <div>
+      <h1>Zagadki — odkryj link</h1>
+      <p class="lead">Każda zagadka po poprawnym rozwiązaniu odsłania kolejną.</p>
+    </div>
+  </header>
+
+  <section class="grid">
+    <!-- PUZZLE 1 -->
+    <article class="card" id="puzzle1">
+      <h2>1. Rebus</h2>
+      <p class="hint">OKO − K + DOM</p>
+      <div class="choices">
+        <input type="radio" id="p1a" name="p1">
+        <label class="choice" for="p1a" onclick="nextPuzzle(2)">Oko + dom = ? (budynek obserwacyjny)</label>
+        <div class="reveal"><p class="small">Brawo! Następna zagadka się pojawia.</p></div>
+
+        <input type="radio" id="p1b" name="p1">
+        <label class="choice" for="p1b"><span>Peron kolejowy</span></label>
+        <div class="reveal"><p class="small">To nie to — spróbuj jeszcze raz.</p></div>
+
+        <input type="radio" id="p1c" name="p1">
+        <label class="choice" for="p1c"><span>Wieża zamkowa</span></label>
+        <div class="reveal"><p class="small">Niestety, to nie jest poprawne.</p></div>
       </div>
-    </header>
+    </article>
 
-    <section class="grid">
-      <!-- PUZZLE 1: REBUS (multiple choice) -->
-      <article class="card step1">
-        <h2>1. Rebus</h2>
-        <p class="hint">W rebusie połącz fragmenty i wybierz właściwą odpowiedź.</p>
+    <!-- PUZZLE 2 -->
+    <article class="card hidden" id="puzzle2">
+      <h2>2. Rozpoznaj piosenkę</h2>
+      <p class="hint">Wysłuchaj krótkiej zajawki i wpisz tytuł piosenki.</p>
+      <audio controls style="width:100%;margin:10px 0 14px 0;">
+        <source src="audio/zajaweczka.mp3" type="audio/mpeg">
+        Twój przeglądarka nie obsługuje odtwarzania audio.
+      </audio>
+      <p class="small">Słowo klucz: <strong>zajaweczka</strong></p>
+      <input type="text" id="songTitle" placeholder="Wpisz tytuł piosenki" style="width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;">
+      <button class="btn" onclick="checkSongTitle()" style="margin-top:10px;">Sprawdź</button>
+      <p id="songMsg" class="small" style="color:#ff6a6a;margin-top:8px;"></p>
+    </article>
 
-        <div class="rebus">OKO − K + DOM</div>
-        <div class="small">Zwróć uwagę — to nie jest obrazek, lecz szybka podpowiedź tekstowa.</div>
+    <!-- PUZZLE 3 -->
+    <article class="card hidden" id="puzzle3">
+      <h2>3. Rymowanka</h2>
+      <p class="hint">Dokończ refren i otwórz film.</p>
+      <button class="btn" onclick="finish()">Otwórz film</button>
+    </article>
+  </section>
 
-        <div class="choices">
-          <input type="radio" id="p1a" name="p1">
-          <label class="choice" for="p1a"><span>Oko + dom = ? (podpowiedź: budynek obserwacyjny)</span></label>
-          <div class="reveal">
-            <p class="small">Brawo! Odsłoniła się kolejna zagadka — przewiń w dół, by ją zobaczyć.</p></div>
+  <footer>
+    <p class="small">Każda poprawna odpowiedź odsłania kolejną zagadkę.</p>
+  </footer>
+</main>
 
-          <input type="radio" id="p1b" name="p1">
-          <label class="choice" for="p1b"><span>Peron kolejowy</span></label>
-          <div class="reveal"><p class="small">To nie to — spróbuj innej odpowiedzi.</p></div>
-
-          <input type="radio" id="p1c" name="p1">
-          <label class="choice" for="p1c"><span>Wieża zamkowa</span></label>
-          <div class="reveal"><p class="small">Niestety, to nie jest poprawne.</p></div>
-        </div>
-      </article>
-
-      <!-- PUZZLE 2: ODGADNIJ TYTUŁ -->
-      <article class="card step2" id="puzzle2">
-        <h2>2. Rozpoznaj piosenkę</h2>
-        <p class="hint">Kliknij przycisk, odsłuchaj zajawkę i wpisz tytuł piosenki.</p>
-
-        <audio controls style="width:100%;margin:10px 0 14px 0;">
-          <source src="https://www.youtube.com/watch?v=k7e_AUmZmDg" type="audio/mpeg">
-        </audio>
-        <p class="small">Słowo klucz: <strong>zajaweczka</strong></p>
-
-        <input type="text" id="songTitle" placeholder="Wpisz tytuł piosenki" style="width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;">
-        <button class="btn" onclick="checkSongTitle()" style="margin-top:10px;">Sprawdź</button>
-        <p id="songMsg" class="small" style="color:#ff6a6a;margin-top:8px;"></p>
-      </article>
-
-      <!-- PUZZLE 3: RYTM I PODPOWIEDź (checkbox to "potwierdź" że znasz odpowiedź) -->
-      <article class="card step3">
-        <h2>3. Rytm i podpowiedź</h2>
-        <p class="hint">Krótka rymowanka. Jeśli potrafisz dokończyć wers, zaznacz pole i otwórz film.</p>
-
-        <p class="small">""Słowa lecą <strong>...</strong>" — dokończ znany refren.</p>
-
-        <div style="margin:8px 0" class="choices">
-          <input type="checkbox" id="p3ok">
-          <label class="choice" for="p3ok">przestanę Cię opuszczać</label>
-          <div class="reveal">
-            <p class="small">Dokładnie! Jeśli jesteś pewien/pewna — otwórz film:</p>
-            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener">Otwórz film</a>
-          </div>
-
-          <input type="checkbox" id="p3fake">
-          <label class="choice" for="p3fake">oddzwonię jutro</label>
-          <div class="reveal"><p class="small">To nie jest fragment refrenu — spróbuj właściwej opcji.</p></div>
-        </div>
-      </article>
-
-    </section>
-
-    <footer>
-      <p class="small">Wskazówka: każdy poprawny wybór ujawnia ten sam link — to zabawna niespodzianka dla znajomych!</p>
-    </footer>
-  </main>
 <script>
-function checkSongTitle(){
+function nextPuzzle(num) {
+  if(num === 2) {
+    document.getElementById('puzzle1').classList.add('hidden');
+    document.getElementById('puzzle2').classList.remove('hidden');
+  }
+}
+
+function checkSongTitle() {
   const input = document.getElementById('songTitle').value.trim().toLowerCase();
-  const correct = 'zajaweczka';
-  if(input === correct){
+  if(input === 'zajaweczka'){
     document.getElementById('songMsg').style.color = '#6aff7a';
     document.getElementById('songMsg').textContent = 'Dobrze! Przechodzisz dalej!';
-    document.querySelector('.step2').style.display = 'none';
-    document.querySelector('.step3').style.display = 'block';
+    document.getElementById('puzzle2').classList.add('hidden');
+    document.getElementById('puzzle3').classList.remove('hidden');
   } else {
     document.getElementById('songMsg').style.color = '#ff6a6a';
     document.getElementById('songMsg').textContent = 'Niepoprawny tytuł — spróbuj ponownie.';
   }
+}
+
+function finish() {
+  window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
 }
 </script>
 </body>
