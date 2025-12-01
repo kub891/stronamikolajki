@@ -1,20 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona Mikołajki</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Zagadki — odkryj link</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#f97316;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{font-family:Inter, ui-sans-serif, system-ui; margin:0; min-height:100vh; background:linear-gradient(180deg,#071023 0%, #07182b 60%); color:#e6eef8; display:flex; align-items:center; justify-content:center; padding:40px}
+
+    .wrap{width:100%;max-width:980px}
+    header{margin-bottom:20px}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:0;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+
+    .card{background:rgba(255,255,255,0.03); padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .hint{color:var(--muted);font-size:13px;margin-bottom:12px}
+
+    .choices{display:flex;flex-direction:column;gap:8px}
+    .choice{background:var(--glass);padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .choice:hover{transform:translateY(-2px)}
+    input[type="radio"],input[type="checkbox"]{display:none}
+
+    .reveal{display:none;margin-top:12px;padding:10px;background:rgba(255,255,255,0.05);border-radius:8px}
+
+    input[type="radio"]:checked + label + .reveal,
+    input[type="checkbox"]:checked + label + .reveal {display:block}
+
+    .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#ff8f43);color:#071021;text-decoration:none;font-weight:700}
+
+    .rebus{font-size:22px;font-weight:700}
+
+    /* --- MECHANIKA ODKRYWANIA --- */
+    .step2, .step3 {display:none}
+
+    /* Po dobrej odpowiedzi nr 1 */
+    #p1a:checked ~ .puzzles .step1 {display:none}
+    #p1a:checked ~ .puzzles .step2 {display:block}
+
+    /* Po dobrej odpowiedzi nr 2 */
+    #p2ok:checked ~ .puzzles .step2 {display:none}
+    #p2ok:checked ~ .puzzles .step3 {display:block}
+
+  </style>
 </head>
 <body>
+  <main class="wrap">
+
     <header>
-        <h1>Strona Mikołajki</h1>
+      <h1>Zagadki — odkryj link</h1>
+      <p class="lead">Rozwiązuj krok po kroku — każda poprawna odpowiedź odsłania kolejną.</p>
     </header>
-    <main>
-        <p>Witamy na stronie Mikołajki!</p>
-    </main>
-    <footer>
-        <p>&copy; 2025 Strona Mikołajki</p>
-    </footer>
+
+    <!-- INPUTY KONTROLUJĄCE UKŁAD -->
+    <input type="radio" id="p1a" name="p1-control">
+    <input type="radio" id="p2ok" name="p2-control">
+
+    <div class="puzzles grid">
+
+      <!-- PUZZLE 1 -->
+      <article class="card step1">
+        <h2>1. Rebus</h2>
+        <p class="hint">Połącz elementy i wybierz odpowiedź.</p>
+
+        <div class="rebus">OKO − K + DOM</div>
+        <div class="small">Podpowiedź: nazwa budynku.</div>
+
+        <div class="choices">
+          <!-- POPRAWNA -->
+          <input type="radio" id="p1_correct" name="p1">
+          <label class="choice" for="p1a"><span>Oko + dom → budynek obserwacyjny</span></label>
+          <div class="reveal"><p>Super! Następna zagadka się pojawi.</p></div>
+
+          <input type="radio" id="p1b" name="p1">
+          <label class="choice" for="p1b">Peron kolejowy</label>
+          <div class="reveal"><p>Nie tym razem.</p></div>
+
+          <input type="radio" id="p1c" name="p1">
+          <label class="choice" for="p1c">Wieża zamkowa</label>
+          <div class="reveal"><p>Błędna odpowiedź.</p></div>
+        </div>
+      </article>
+
+      <!-- PUZZLE 2 -->
+      <article class="card step2">
+        <h2>2. Rozpoznaj piosenkę</h2>
+        <p class="hint">Wysłuchaj zajawki. Podpowiedź: <strong>zajaweczka</strong>.</p>
+
+        <div class="choices">
+          <!-- POPRAWNA -->
+          <input type="radio" id="p2_correct" name="p2">
+          <label class="choice" for="p2ok">Brzmi znajomo</label>
+          <div class="reveal"><p>Dobrze! Czas na ostatnią zagadkę.</p></div>
+
+          <input type="radio" id="p2x" name="p2">
+          <label class="choice" for="p2x">Nie kojarzę</label>
+          <div class="reveal"><p>Spróbuj raz jeszcze.</p></div>
+        </div>
+      </article>
+
+      <!-- PUZZLE 3 -->
+      <article class="card step3">
+        <h2>3. Rymowanka</h2>
+        <p class="hint">Dokończ refren zaznaczając poprawną odpowiedź.</p>
+
+        <div class="choices">
+          <input type="checkbox" id="p3ok">
+          <label class="choice" for="p3ok">przestanę Cię opuszczać</label>
+          <div class="reveal">
+            <p>Świetnie! Oto link:</p>
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Otwórz film</a>
+          </div>
+
+          <input type="checkbox" id="p3bad">
+          <label class="choice" for="p3bad">oddzwonię jutro</label>
+          <div class="reveal"><p>To nie to.</p></div>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
 </body>
 </html>
