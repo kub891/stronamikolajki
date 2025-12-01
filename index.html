@@ -41,24 +41,15 @@
   </header>
 
   <section class="grid">
-    <!-- PUZZLE 1 -->
-    <article class="card" id="puzzle1">
-      <h2>1. Rebus</h2>
-      <p class="hint">OKO − K + DOM</p>
-      <div class="choices">
-        <input type="radio" id="p1a" name="p1">
-        <label class="choice" for="p1a" onclick="nextPuzzle(2)">Oko + dom = ? (budynek obserwacyjny)</label>
-        <div class="reveal"><p class="small">Brawo! Następna zagadka się pojawia.</p></div>
+   <!-- PUZZLE 1 -->
+<article class="card" id="puzzle1">
+  <h2>1. Pytanie</h2>
+  <p class="hint">Najlepszy przyjaciel to:</p>
+  <input type="text" id="friendAnswer" placeholder="Wpisz odpowiedź" style="width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px;">
+  <button class="btn" onclick="nextPuzzleText()" style="margin-top:10px;">Sprawdź</button>
+  <p id="friendMsg" class="small" style="color:#6aff7a;margin-top:8px;"></p>
+</article>
 
-        <input type="radio" id="p1b" name="p1">
-        <label class="choice" for="p1b"><span>Peron kolejowy</span></label>
-        <div class="reveal"><p class="small">To nie to — spróbuj jeszcze raz.</p></div>
-
-        <input type="radio" id="p1c" name="p1">
-        <label class="choice" for="p1c"><span>Wieża zamkowa</span></label>
-        <div class="reveal"><p class="small">Niestety, to nie jest poprawne.</p></div>
-      </div>
-    </article>
 
     <!-- PUZZLE 2 -->
 <article class="card hidden" id="puzzle2">
@@ -112,6 +103,14 @@ function checkSongTitle() {
 
 function finish() {
   window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+}
+
+function nextPuzzleText() {
+  const input = document.getElementById('friendAnswer').value.trim();
+  // Każda odpowiedź jest dobra
+  document.getElementById('friendMsg').textContent = 'Super! Następna zagadka się pojawia.';
+  document.getElementById('puzzle1').classList.add('hidden');
+  document.getElementById('puzzle2').classList.remove('hidden');
 }
 </script>
 </body>
